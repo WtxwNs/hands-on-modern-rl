@@ -17,7 +17,7 @@ import sys
 import os
 
 # Import the offline environment from the docs directory script
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../docs/chapter10_agentic_rl/code'))
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../docs/chapter22_agentic/code'))
 from deep_research_rl_benchmark import DOCS, TASKS, search, Document
 
 # 1. Prepare the Dataset

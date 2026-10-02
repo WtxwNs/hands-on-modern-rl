@@ -1,7 +1,13 @@
 # run.py
+from environment import SandboxEnv
+
+# 在下载模型之前检查隔离执行后端。将 executor 替换为已配置的隔离服务。
+executor = None
+if executor is None:
+    raise SystemExit("请先配置隔离执行后端 executor；本示例不会在宿主机执行模型生成的代码。")
+
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from environment import SandboxEnv
 from policy import Policy
 from trainer import GRPOAgentTrainer
 
@@ -11,7 +17,7 @@ model = AutoModelForCausalLM.from_pretrained(model_name)
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 # 初始化各组件
-env = SandboxEnv(timeout=10)
+env = SandboxEnv(timeout=10, executor=executor)
 policy = Policy(model, tokenizer, lr=5e-5)
 ref_model = AutoModelForCausalLM.from_pretrained(model_name)
 policy.set_ref_model(ref_model)
