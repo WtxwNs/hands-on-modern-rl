@@ -16,7 +16,7 @@ from openai import OpenAI
 import sys
 
 # Import our offline environment from the benchmark script
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../docs/chapter10_agentic_rl/code'))
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../docs/chapter22_agentic/code'))
 from deep_research_rl_benchmark import DOCS, TASKS
 
 # Initialize OpenAI Client (Replace with your compatible API base and key)

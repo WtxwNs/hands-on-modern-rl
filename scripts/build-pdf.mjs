@@ -1,3 +1,4 @@
+import { resolveStaticFile } from './static-files.mjs'
 /* global process */
 import { spawnSync } from 'node:child_process'
 import fs from 'node:fs'
@@ -867,28 +868,7 @@ function contentTypeFor(filePath) {
 }
 
 function resolveStaticPath(urlPath, base) {
-  let pathname = decodeURIComponent(urlPath)
-
-  if (base !== '/' && pathname.startsWith(base)) {
-    pathname = `/${pathname.slice(base.length)}`
-  }
-
-  let filePath = path.join(distDir, pathname)
-  if (!filePath.startsWith(distDir)) return null
-
-  if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
-    filePath = path.join(filePath, 'index.html')
-  } else if (!fs.existsSync(filePath) && !path.extname(filePath)) {
-    const cleanUrlPath = `${filePath}.html`
-    const indexPath = path.join(filePath, 'index.html')
-    filePath = fs.existsSync(cleanUrlPath) ? cleanUrlPath : indexPath
-  }
-
-  if (!filePath.startsWith(distDir) || !fs.existsSync(filePath)) {
-    return null
-  }
-
-  return filePath
+  return resolveStaticFile(distDir, urlPath, base)
 }
 
 function createStaticServer(base) {
